@@ -4,8 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>错误页</title>
-  <!-- 引入样式 -->
-  <link rel="stylesheet" href="/css/global.css">
 </head>
 <body>
 
