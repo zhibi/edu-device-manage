@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 
@@ -85,10 +86,10 @@ public class IndexController extends BaseController {
      * @return
      */
     @PostMapping(value = "login")
-    public String login(String phone, String password) {
+    public String login(String phone, String password, RedirectAttributes attributes) {
         User user = userService.login(phone, password, "user");
         if (null == user) {
-            return redirect("用户名或密码错误", "login");
+            return redirect("用户名或密码错误", "login", attributes);
         }
         session.setAttribute(SESSION_USER, user);
         return redirect("/");
@@ -102,23 +103,23 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(User user, String password2, String verifyCode) {
+    public String register(User user, String password2, String verifyCode, RedirectAttributes attributes) {
         String code = verifyCodeService.getCode(request);
         if (!code.equalsIgnoreCase(verifyCode)) {
-            return redirect("验证码错误", "register");
+            return redirect("验证码错误", "register", attributes);
         }
         verifyCodeService.removeCode(request);
         if (!user.getPassword().equals(password2)) {
-            return redirect("两次密码不一样", "register");
+            return redirect("两次密码不一样", "register", attributes);
         }
         User temp = userService.selectByPhone(user.getPhone());
         if (null != temp) {
-            return redirect("该手机号已经注册", "register");
+            return redirect("该手机号已经注册", "register", attributes);
         }
         user.setPassword(MD5Utils.encrypt(user.getPassword()));
         user.setCreateTime(new Date());
         userMapper.insertSelective(user);
-        return redirect("注册成功，请登录", "login");
+        return redirect("注册成功，请登录", "login", attributes);
     }
 
     /**
@@ -127,9 +128,9 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping("logout")
-    public String logout() {
+    public String logout(RedirectAttributes attributes) {
         session.removeAttribute(SESSION_USER);
-        return redirect("login");
+        return redirect("您已经安全退出", "login", attributes);
     }
 
 

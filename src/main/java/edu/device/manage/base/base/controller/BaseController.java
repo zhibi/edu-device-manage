@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,22 +51,6 @@ public abstract class BaseController implements Constant {
         return "/data/" + fileName;
     }
 
-    /**
-     * 将数据放在model里面
-     *
-     * @param model
-     * @param attributes
-     */
-    protected void setModelAttribute(Model model, Object... attributes) {
-        if (attributes != null && attributes.length > 0) {
-            for (Object object : attributes) {
-                if (null != object) {
-                    model.addAttribute(object);
-                }
-            }
-        }
-        model.addAttribute("requestUrl", request.getRequestURI() + "?" + ParamUtils.params2String(request));
-    }
 
     /**
      * 刷新页面
@@ -77,8 +62,8 @@ public abstract class BaseController implements Constant {
         return "redirect:" + request.getHeader("Referer");
     }
 
-    protected String refresh(String message) {
-        session.setAttribute(ERROR_MESSAGE, message);
+    protected String refresh(String message, RedirectAttributes attributes) {
+        attributes.addFlashAttribute(ERROR_MESSAGE, message);
         return "redirect:" + request.getHeader("Referer");
     }
 
@@ -99,40 +84,8 @@ public abstract class BaseController implements Constant {
      * @param message
      * @return
      */
-    protected String redirect(String message, String viewName) {
-        session.setAttribute(ERROR_MESSAGE, message);
+    protected String redirect(String message, String viewName, RedirectAttributes attributes) {
+        attributes.addFlashAttribute(ERROR_MESSAGE, message);
         return "redirect:" + viewName;
-    }
-
-    /**
-     * 提示
-     *
-     * @param message
-     * @return
-     */
-    protected String prompt(String message) {
-        request.setAttribute(Constant.ERROR_MESSAGE, message);
-        request.setAttribute(Constant.BACK_RUL, request.getHeader("Referer"));
-        return "error";
-    }
-
-    /**
-     * 提示
-     *
-     * @param message
-     * @param backUrl
-     * @return
-     */
-    protected String prompt(String message, String backUrl) {
-        request.setAttribute(Constant.ERROR_MESSAGE, message);
-        request.setAttribute(Constant.BACK_RUL, backUrl);
-        return "error";
-    }
-
-    @ModelAttribute
-    public void init() {
-        Object errorMessage = session.getAttribute(ERROR_MESSAGE);
-        request.setAttribute(ERROR_MESSAGE, errorMessage);
-        session.removeAttribute(ERROR_MESSAGE);
     }
 }

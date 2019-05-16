@@ -9,10 +9,6 @@ public interface Constant {
      * session 用户
      */
     String SESSION_USER  = "sessionUser";
-    /**
-     * session 管理员
-     */
-    String SESSION_ADMIN = "sessionAdmin";
 
     /**
      * 错误消息

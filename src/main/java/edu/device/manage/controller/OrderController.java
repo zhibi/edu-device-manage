@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -77,10 +78,10 @@ public class OrderController extends BaseController {
      * @return
      */
     @RequestMapping("pay/{orderId}")
-    public String pay(@PathVariable Integer orderId) {
+    public String pay(@PathVariable Integer orderId, RedirectAttributes attributes) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
         orderService.pay(order);
-        return refresh("支付成功，商家处理中");
+        return refresh("支付成功，商家处理中", attributes);
     }
 
     /**

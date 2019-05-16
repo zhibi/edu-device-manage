@@ -8,4 +8,10 @@
     <script src="/webjars/jquery/2.0.3/jquery.min.js"></script>
     <title>设备管理</title>
 </head>
+<script>
+    var err = "${errorMessage!}";
+    if (err.length > 0) {
+        mui.alert(err, '提示');
+    }
+</script>
 
