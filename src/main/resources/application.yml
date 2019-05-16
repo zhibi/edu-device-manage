@@ -19,6 +19,8 @@ spring:
     template-loader-path: ["classpath:/templates/"]
     settings:
       number_format: '0.##'   #数字格式化，无小数点
+  resources:
+    static-locations: ["file:${upload.path}","static"]
 server:
   port: 80
 
@@ -36,6 +38,9 @@ mybatis:
 # mapper
 mapper:
   enum-as-simple-type: true
+
+upload:
+  path: D:\Project-Upload
 
 ## 自定义配置
 zhibi:

@@ -10,7 +10,7 @@
 <#include "../common/header.ftl"/>
 
 <div class="mui-content">
-  <form class="mui-input-group" style="margin-top: 8px" method="post" id="form" name="form">
+  <form class="mui-input-group" style="margin-top: 8px" method="post" id="form" name="form" enctype="multipart/form-data">
     <div class="mui-input-row">
       <label>名字：</label>
       <input type="text" name="name" class="mui-input-clear" required data-input-clear="5"><span
@@ -24,6 +24,11 @@
     <div class="mui-input-row">
       <label>购买时间：</label>
       <input type="text" name="payTime" id="payTime" class="mui-input-clear" required data-input-clear="5"><span
+              class="mui-icon mui-icon-clear mui-hidden"></span>
+    </div>
+    <div class="mui-input-row">
+      <label>图片：</label>
+      <input type="file" name="file"  class="mui-input-clear" required data-input-clear="5"><span
               class="mui-icon mui-icon-clear mui-hidden"></span>
     </div>
 

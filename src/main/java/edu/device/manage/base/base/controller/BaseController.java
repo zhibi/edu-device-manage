@@ -1,11 +1,9 @@
 package edu.device.manage.base.base.controller;
 
 import edu.device.manage.base.context.Constant;
-import edu.device.manage.base.utils.ParamUtils;
 import edu.device.manage.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,9 +20,11 @@ import java.util.UUID;
 public abstract class BaseController implements Constant {
 
     @Autowired
-    protected HttpSession session;
+    protected HttpSession        session;
     @Autowired
     protected HttpServletRequest request;
+    @Value("${upload.path}")
+    private   String             uploadPath;
 
     protected User sessionUser() {
         return (User) session.getAttribute(SESSION_USER);
@@ -37,9 +37,9 @@ public abstract class BaseController implements Constant {
      * @return
      */
     protected String saveFile(MultipartFile file) {
-        String back = file.getOriginalFilename().substring(("." + file.getOriginalFilename()).lastIndexOf("."));
+        String back     = file.getOriginalFilename().substring(("." + file.getOriginalFilename()).lastIndexOf("."));
         String fileName = UUID.randomUUID() + "." + back;
-        File newFile = new File(request.getServletContext().getRealPath("/data/") + "/" + fileName);
+        File   newFile  = new File(uploadPath + "/upload/" + fileName);
         newFile.getParentFile().mkdirs();
         try {
             newFile.createNewFile();
@@ -48,7 +48,7 @@ public abstract class BaseController implements Constant {
             e.printStackTrace();
         }
         System.out.println("上传文件: " + newFile.getAbsolutePath());
-        return "/data/" + fileName;
+        return "/upload/" + fileName;
     }
 
 

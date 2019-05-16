@@ -16,10 +16,10 @@
     <div class="mui-card">
       <div class="mui-card-header">${item.name}</div>
       <div class="mui-card-content">
-        <img src="${item.icon}" width="100%">
+        <img src="${item.icon}" width="100%" height="200px">
       </div>
       <div class="mui-card-footer">
-        <a class="mui-card-link" href="#">${item.userName!}</a>
+        <span class="mui-card-link" href="#">${item.userName!}</span>
         <a class="mui-card-link" href="/business/detail/${item.id}">详情</a>
       </div>
     </div>

@@ -33,11 +33,6 @@ public class Device extends BasePageDTO implements Serializable {
     private String description;
 
     /**
-     * 分类
-     */
-    private String category;
-
-    /**
      * 购买时间
      */
     private String payTime;
