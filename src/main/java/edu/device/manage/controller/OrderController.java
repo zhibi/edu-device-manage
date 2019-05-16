@@ -71,18 +71,6 @@ public class OrderController extends BaseController {
     }
 
 
-    /**
-     * 订单支付
-     *
-     * @param orderId
-     * @return
-     */
-    @RequestMapping("pay/{orderId}")
-    public String pay(@PathVariable Integer orderId, RedirectAttributes attributes) {
-        Order order = orderMapper.selectByPrimaryKey(orderId);
-        orderService.pay(order);
-        return refresh("支付成功，商家处理中", attributes);
-    }
 
     /**
      * 我的订单

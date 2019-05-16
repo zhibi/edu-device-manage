@@ -15,7 +15,12 @@ import java.util.List;
  */
 public interface OrderService extends BaseService<Order>, Constant {
 
-    void pay(Order order);
+    /**
+     * 借用
+     * @param userId
+     * @param deviceId
+     */
+    void lend(Integer userId,Integer deviceId);
 
     /**
      * 通过条件查找

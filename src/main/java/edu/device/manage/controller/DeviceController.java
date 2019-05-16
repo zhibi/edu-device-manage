@@ -4,6 +4,7 @@ import edu.device.manage.base.annocation.RequestLogin;
 import edu.device.manage.base.base.controller.BaseController;
 import edu.device.manage.domain.Device;
 import edu.device.manage.service.DeviceService;
+import edu.device.manage.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,8 @@ public class DeviceController extends BaseController {
 
     @Autowired
     private DeviceService deviceService;
+    @Autowired
+    private OrderService  orderService;
 
 
     /**
@@ -93,8 +96,8 @@ public class DeviceController extends BaseController {
      */
     @GetMapping("lend/{id}")
     @RequestLogin
-    public String lend(@PathVariable Integer id) {
-
-        return "lend";
+    public String lend(@PathVariable Integer id, RedirectAttributes attributes) {
+        orderService.lend(sessionUser().getId(), id);
+        return refresh("借用成功，请记得归还", attributes);
     }
 }

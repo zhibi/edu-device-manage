@@ -4,14 +4,17 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import edu.device.manage.base.base.service.BaseServiceImpl;
 import edu.device.manage.base.mybatis.condition.MybatisCondition;
+import edu.device.manage.domain.Device;
 import edu.device.manage.domain.Order;
+import edu.device.manage.mapper.DeviceMapper;
 import edu.device.manage.mapper.OrderMapper;
 import edu.device.manage.model.OrderModel;
 import edu.device.manage.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,13 +25,24 @@ import java.util.List;
 public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implements OrderService {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OrderMapper  orderMapper;
+    @Autowired
+    private DeviceMapper deviceMapper;
 
-    @Transient
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void pay(Order order) {
-        order.setStatus("已支付");
-        orderMapper.updateByPrimaryKeySelective(order);
+    public void lend(Integer userId, Integer deviceId) {
+        Device device = deviceMapper.selectByPrimaryKey(deviceId);
+        device.setStatus("借出");
+        device.setUpdateTime(new Date());
+        deviceMapper.updateByPrimaryKeySelective(device);
+        // 生成订单
+        Order order = new Order()
+                .setDeviceId(deviceId)
+                .setUserId(userId)
+                .setStatus("借出");
+        orderMapper.insertSelective(order);
     }
 
     @Override

@@ -44,8 +44,7 @@
   </ul>
   <#if device.status == '未借'>
     <div class="mui-card-footer">
-      <button type="button" class="mui-btn mui-btn-primary" onclick="location.href='/device/lend/${device.id!}'">借
-      </button>
+      <button type="button" class="mui-btn mui-btn-primary" onclick="location.href='/device/lend/${device.id!}'">借用</button>
     </div>
   </#if>
 </div>
