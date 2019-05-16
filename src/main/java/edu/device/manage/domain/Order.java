@@ -17,7 +17,6 @@ import java.io.Serializable;
 @Data
 public class Order extends BasePageDTO implements Serializable {
 
-    private String orderNo;
     /**
      * 状态 借出  已还
      */
@@ -30,8 +29,8 @@ public class Order extends BasePageDTO implements Serializable {
     private Integer userId;
 
     /**
-     * 归还时间
+     * 设备Id
      */
-    private String remandTime;
+    private Integer deviceId;
 
 }

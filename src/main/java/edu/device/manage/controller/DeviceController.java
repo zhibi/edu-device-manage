@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("device")
-@RequestLogin
+
 public class DeviceController extends BaseController {
 
     @Autowired
@@ -35,6 +35,7 @@ public class DeviceController extends BaseController {
      * @return
      */
     @GetMapping("add")
+    @RequestLogin
     public String add() {
         return "device/add";
     }
@@ -43,6 +44,7 @@ public class DeviceController extends BaseController {
      * 添加设备
      */
     @PostMapping("add")
+    @RequestLogin
     public String add(RedirectAttributes attributes, Device device, MultipartFile file) {
         String path = saveFile(file);
         device.setIcon(path);
@@ -56,6 +58,7 @@ public class DeviceController extends BaseController {
      * 我的设备列表
      */
     @GetMapping("list")
+    @RequestLogin
     public String list(Model model) {
         List<Device> deviceList = deviceService.select(new Device().setUserId(sessionUser().getId()));
         model.addAttribute("deviceList", deviceList);
@@ -66,6 +69,7 @@ public class DeviceController extends BaseController {
      * 删除
      */
     @GetMapping("del/{id}")
+    @RequestLogin
     public String del(@PathVariable Integer id, RedirectAttributes attributes) {
         deviceService.deleteByPrimaryKey(id);
         return refresh("删除成功", attributes);
@@ -82,5 +86,15 @@ public class DeviceController extends BaseController {
         Device device = deviceService.selectByPrimaryKey(id);
         model.addAttribute(device);
         return "device/detail";
+    }
+
+    /**
+     * 借
+     */
+    @GetMapping("lend/{id}")
+    @RequestLogin
+    public String lend(@PathVariable Integer id) {
+
+        return "lend";
     }
 }
