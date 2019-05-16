@@ -4,9 +4,9 @@ import com.github.pagehelper.PageInfo;
 import edu.device.manage.base.base.controller.BaseController;
 import edu.device.manage.base.mybatis.condition.MybatisCondition;
 import edu.device.manage.base.utils.MD5Utils;
-import edu.device.manage.domain.Device;
 import edu.device.manage.domain.User;
 import edu.device.manage.mapper.UserMapper;
+import edu.device.manage.model.DeviceModel;
 import edu.device.manage.service.DeviceService;
 import edu.device.manage.service.UserService;
 import edu.device.manage.service.VerifyCodeService;
@@ -49,11 +49,11 @@ public class IndexController extends BaseController {
     @RequestMapping({"/", "index"})
     public String index(Model model, String name) {
         MybatisCondition example = new MybatisCondition()
-                .order("sort", false)
-                .like("name", name)
+                .order("d.id", false)
+                .like("d.name", name)
                 .page(1, 50);
-        PageInfo<Device> businessPageInfo = deviceService.selectPage(example);
-        model.addAttribute("businessList", businessPageInfo.getList());
+        PageInfo<DeviceModel> pageInfo = deviceService.selectModelPage(example);
+        model.addAttribute("deviceList", pageInfo.getList());
         return "index";
     }
 

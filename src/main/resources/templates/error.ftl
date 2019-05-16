@@ -8,9 +8,6 @@
 <body>
 
 <div id="app" class="exception">
-  <div class="img">
-    <img src="/images/error.svg"/>
-  </div>
   <div class="content">
     <h1>操作提示</h1>
     <div class="desc">${errorMessage!}${tipMesssage!}</div>

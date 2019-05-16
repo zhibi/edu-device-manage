@@ -2,6 +2,7 @@ package edu.device.manage.domain;
 
 import edu.device.manage.base.base.dto.BasePageDTO;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @Table(name = "device")
+@Accessors(chain = true)
 public class Device extends BasePageDTO implements Serializable {
 
     /**

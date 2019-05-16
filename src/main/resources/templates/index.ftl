@@ -7,20 +7,19 @@
 <div class="mui-content">
   <div class="mui-input-row mui-search">
     <form>
-      <input type="search" class="mui-input-clear" placeholder="" name="keywords">
+      <input type="search" class="mui-input-clear" placeholder="" name="name">
     </form>
 
   </div>
 
-  <#list businessList as item>
+  <#list deviceList as item>
     <div class="mui-card">
       <div class="mui-card-header">${item.name}</div>
       <div class="mui-card-content">
         <img src="${item.icon}" width="100%">
       </div>
       <div class="mui-card-footer">
-        <a class="mui-card-link" href="/order/send/${item.id!}">预定 ${item.orderNum} </a>
-        <a class="mui-card-link" href="/comment/${item.id!}">评论 ${item.commendNum} </a>
+        <a class="mui-card-link" href="#">${item.userName!}</a>
         <a class="mui-card-link" href="/business/detail/${item.id}">详情</a>
       </div>
     </div>
