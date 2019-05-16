@@ -4,12 +4,12 @@ import com.github.pagehelper.PageInfo;
 import edu.device.manage.base.base.controller.BaseController;
 import edu.device.manage.base.mybatis.condition.MybatisCondition;
 import edu.device.manage.base.utils.MD5Utils;
-import edu.device.manage.service.UserService;
-import edu.device.manage.service.VerifyCodeService;
-import edu.device.manage.domain.Business;
+import edu.device.manage.domain.Device;
 import edu.device.manage.domain.User;
 import edu.device.manage.mapper.UserMapper;
-import edu.device.manage.service.BusinessService;
+import edu.device.manage.service.DeviceService;
+import edu.device.manage.service.UserService;
+import edu.device.manage.service.VerifyCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +29,11 @@ import java.util.Date;
 public class IndexController extends BaseController {
 
     @Autowired
-    private UserService     userService;
+    private UserService   userService;
     @Autowired
-    private BusinessService businessService;
+    private UserMapper    userMapper;
     @Autowired
-    private UserMapper      userMapper;
+    private DeviceService deviceService;
 
     @Autowired
     private VerifyCodeService verifyCodeService;
@@ -47,12 +47,11 @@ public class IndexController extends BaseController {
      */
     @RequestMapping({"/", "index"})
     public String index(Model model, String name) {
-        // 展示商家
         MybatisCondition example = new MybatisCondition()
                 .order("sort", false)
                 .like("name", name)
                 .page(1, 50);
-        PageInfo<Business> businessPageInfo = businessService.selectPage(example);
+        PageInfo<Device> businessPageInfo = deviceService.selectPage(example);
         model.addAttribute("businessList", businessPageInfo.getList());
         return "index";
     }
@@ -117,10 +116,7 @@ public class IndexController extends BaseController {
             return redirect("该手机号已经注册", "register");
         }
         user.setPassword(MD5Utils.encrypt(user.getPassword()));
-        user.setUsername(user.getPhone());
-        user.setAddtime(new Date());
-        user.setStatus("SUCCESS");
-        user.setRole("user");
+        user.setCreateTime(new Date());
         userMapper.insertSelective(user);
         return redirect("注册成功，请登录", "login");
     }

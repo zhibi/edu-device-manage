@@ -6,6 +6,6 @@
     <link href="/plugins/mui/css/icons-extra.css" rel="stylesheet"/>
     <script src="/plugins/mui/js/mui.min.js"></script>
     <script src="/webjars/jquery/2.0.3/jquery.min.js"></script>
-    <title>Eat Order</title>
+    <title>设备管理</title>
 </head>
 

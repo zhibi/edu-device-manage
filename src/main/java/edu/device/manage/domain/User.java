@@ -19,7 +19,6 @@ import java.util.Date;
 public class User extends BasePageDTO implements Serializable {
 
     private String phone;
-    private String username;
     /**
      * 昵称
      */

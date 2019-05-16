@@ -30,8 +30,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public User login(String username, String password, String role) {
         User user = new User();
-        user.setRole(role);
-        user.setUsername(username);
+        user.setPhone(username);
         user.setPassword(MD5Utils.encrypt(password));
         return userMapper.selectOne(user);
     }
