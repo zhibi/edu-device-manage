@@ -1,6 +1,5 @@
 package edu.device.manage.service;
 
-import com.github.pagehelper.PageInfo;
 import edu.device.manage.base.base.service.BaseService;
 import edu.device.manage.base.context.Constant;
 import edu.device.manage.base.mybatis.condition.MybatisCondition;
@@ -17,10 +16,11 @@ public interface OrderService extends BaseService<Order>, Constant {
 
     /**
      * 借用
+     *
      * @param userId
      * @param deviceId
      */
-    void lend(Integer userId,Integer deviceId);
+    void lend(Integer userId, Integer deviceId);
 
     /**
      * 通过条件查找
@@ -31,12 +31,9 @@ public interface OrderService extends BaseService<Order>, Constant {
     List<OrderModel> selectModel(MybatisCondition example);
 
     /**
-     * 通过条件分页查找
+     * 归还 设备
      *
-     * @param example
-     * @return
+     * @param id
      */
-    PageInfo<OrderModel> selectModelPage(MybatisCondition example);
-
-    OrderModel selectModelById(Long id);
+    void remand(Integer id);
 }

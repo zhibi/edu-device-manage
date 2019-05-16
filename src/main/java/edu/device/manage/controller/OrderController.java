@@ -31,45 +31,6 @@ public class OrderController extends BaseController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private OrderMapper  orderMapper;
-    @Autowired
-    private DeviceMapper deviceMapper;
-
-
-    /**
-     * 发布预约页面
-     *
-     * @param businessId
-     * @param model
-     * @return
-     */
-    @GetMapping("send/{businessId}")
-    public String send(@PathVariable Integer businessId, Model model) {
-        // 菜品
-        MybatisCondition example = new MybatisCondition()
-                .order("sort", false)
-                .eq("business_id", businessId);
-        List<Device> deviceList = deviceMapper.selectByExample(example);
-        model.addAttribute(deviceList);
-        return "business/order-send";
-    }
-
-
-    /**
-     * 订单详情
-     *
-     * @param id
-     * @param model
-     * @return
-     */
-    @GetMapping("detail/{id}")
-    public String detail(@PathVariable Integer id, Model model) {
-        Order order = orderMapper.selectByPrimaryKey(id);
-        model.addAttribute(order);
-        return "user/order-detail";
-    }
-
 
 
     /**
@@ -86,6 +47,12 @@ public class OrderController extends BaseController {
         List<OrderModel> orderList = orderService.selectModel(example);
         model.addAttribute("orderList", orderList);
         return "user/order-list";
+    }
+
+    @RequestMapping("remand/{id}")
+    public String remand(@PathVariable Integer id,RedirectAttributes attributes){
+        orderService.remand(id);
+        return refresh("归还成功",attributes);
     }
 
 

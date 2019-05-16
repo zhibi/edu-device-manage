@@ -1,7 +1,5 @@
 package edu.device.manage.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import edu.device.manage.base.base.service.BaseServiceImpl;
 import edu.device.manage.base.mybatis.condition.MybatisCondition;
 import edu.device.manage.domain.Device;
@@ -42,6 +40,7 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
                 .setDeviceId(deviceId)
                 .setUserId(userId)
                 .setStatus("借出");
+        order.setCreateTime(new Date());
         orderMapper.insertSelective(order);
     }
 
@@ -51,19 +50,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     }
 
     @Override
-    public PageInfo<OrderModel> selectModelPage(MybatisCondition condition) {
-        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
-        return new PageInfo<>(selectModel(condition));
+    public void remand(Integer id) {
+        Order order = orderMapper.selectByPrimaryKey(id);
+        order.setUpdateTime(new Date());
+        order.setStatus("归还");
+        orderMapper.updateByPrimaryKeySelective(order);
+        Device device = deviceMapper.selectByPrimaryKey(order.getDeviceId());
+        device.setStatus("未借");
+        device.setUpdateTime(new Date());
+        deviceMapper.updateByPrimaryKeySelective(device);
     }
 
-    @Override
-    public OrderModel selectModelById(Long id) {
-        MybatisCondition example = new MybatisCondition()
-                .eq("o.id", id);
-        List<OrderModel> list = selectModel(example);
-        if (list.size() > 0) {
-            return list.get(0);
-        }
-        return null;
-    }
 }

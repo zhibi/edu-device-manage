@@ -39,15 +39,18 @@
       <span class="mui-icon-extra mui-icon-extra-filter"></span> 状态：${device.status!}
     </li>
     <li class="mui-table-view-cell">
-      <span class="mui-icon-extra mui-icon-extra-outline"></span> 添加时间：${device.createTime?string("yyyy-MM-dd HH:mm:ss")}
+      <span class="mui-icon-extra mui-icon-extra-outline"></span>
+      添加时间：${device.createTime?string("yyyy-MM-dd HH:mm:ss")}
     </li>
   </ul>
   <#if device.status == '未借'>
     <div class="mui-card-footer">
-      <button type="button" class="mui-btn mui-btn-primary" onclick="location.href='/device/lend/${device.id!}'">借用</button>
+      <button type="button" class="mui-btn mui-btn-primary" onclick="location.href='/device/lend/${device.id!}'">借用
+      </button>
     </div>
   </#if>
 </div>
+<#include "../common/footer.ftl"/>
 </body>
 
 </html>
