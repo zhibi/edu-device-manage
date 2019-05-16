@@ -9,7 +9,6 @@
     <form>
       <input type="search" class="mui-input-clear" placeholder="" name="name">
     </form>
-
   </div>
 
   <#list deviceList as item>
@@ -20,7 +19,7 @@
       </div>
       <div class="mui-card-footer">
         <span class="mui-card-link" href="#">${item.userName!}</span>
-        <a class="mui-card-link" href="/business/detail/${item.id}">详情</a>
+        <a class="mui-card-link" href="/device/detail/${item.id}">详情</a>
       </div>
     </div>
   </#list>

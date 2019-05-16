@@ -77,7 +77,7 @@ public class DeviceController extends BaseController {
      * @param id
      * @return
      */
-    @GetMapping("detail{id}")
+    @GetMapping("detail/{id}")
     public String del(@PathVariable Integer id, Model model) {
         Device device = deviceService.selectByPrimaryKey(id);
         model.addAttribute(device);
