@@ -24,7 +24,8 @@
     <div class="mui-input-row">
       <label>验证码</label>
       <input name='verifyCode' required type="text" class="mui-input" style="    width: 100px;float: left;">
-      <img src="/helper/verify" width="90px" height="40px" style="float: right" onclick="$(this).attr('src',$(this).attr('src')+'?ss='+Math.random())">
+      <img src="/helper/verify" width="90px" height="40px" style="float: right"
+           onclick="$(this).attr('src',$(this).attr('src')+'?ss='+Math.random())">
     </div>
   </form>
 
@@ -38,10 +39,5 @@
 
 
 </body>
-<script>
-    var err = "${errorMessage!}";
-    if (err.length > 0) {
-        mui.alert(err, '提示');
-    }
-</script>
+<#include "common/footer.ftl"/>
 </html>

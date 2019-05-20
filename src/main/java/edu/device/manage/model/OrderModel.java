@@ -5,20 +5,23 @@ import lombok.Data;
 
 /**
  * @author 执笔
- * @date 2019/4/10 13:18
+ * @date 2019/5/16 13:18
  */
 @Data
 public class OrderModel extends Order {
 
+    /**
+     * 发布人
+     */
     private String userName;
     /**
      *
      */
-    private String businessName;
+    private String deviceName;
 
     /**
-     * 商家图标
+     * 图标
      */
-    private String businessIcon;
+    private String deviceIcon;
 
 }

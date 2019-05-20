@@ -11,7 +11,11 @@
  Target Server Version : 50173
  File Encoding         : 65001
 
+<<<<<<< HEAD
  Date: 20/05/2019 15:20:58
+=======
+ Date: 16/05/2019 21:45:33
+>>>>>>> e6f6cdfb9dc45053b60e11be979706c82c0985fc
 */
 
 SET NAMES utf8mb4;

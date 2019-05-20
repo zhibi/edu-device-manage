@@ -20,7 +20,7 @@ spring:
     settings:
       number_format: '0.##'   #数字格式化，无小数点
   resources:
-    static-locations: ["file:${upload.path}","static"]
+    static-locations: ["file:${upload.path}","classpath:/static/"]
 server:
   port: 80
 
@@ -43,13 +43,14 @@ upload:
   path: D:\Project-Upload
 
 ## 自定义配置
-zhibi:
+fast:
   generate:
-    packageConfig:
+    package:
       parent: edu.device.manage
     strategy:
       sync: entity_to_database
     global:
       generatorFile: false
+      enable: true
     dataSource:
       delOverColumn: true

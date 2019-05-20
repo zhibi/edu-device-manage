@@ -37,5 +37,6 @@
   <a href="/logout" style="padding:8px;margin-top: 16px" type="button" class="mui-btn mui-btn-block mui-btn-primary">退出登录</a>
 
 </div>
+<#include "../common/footer.ftl"/>
 </body>
 </html>

@@ -1,17 +1,18 @@
 package edu.device.manage.service.impl;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import edu.device.manage.base.base.service.BaseServiceImpl;
 import edu.device.manage.base.mybatis.condition.MybatisCondition;
+import edu.device.manage.domain.Device;
 import edu.device.manage.domain.Order;
+import edu.device.manage.mapper.DeviceMapper;
 import edu.device.manage.mapper.OrderMapper;
 import edu.device.manage.model.OrderModel;
 import edu.device.manage.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,13 +23,25 @@ import java.util.List;
 public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implements OrderService {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OrderMapper  orderMapper;
+    @Autowired
+    private DeviceMapper deviceMapper;
 
-    @Transient
+
+    @Transactional(rollbackFor = Exception.class)
     @Override
-    public void pay(Order order) {
-        order.setStatus("已支付");
-        orderMapper.updateByPrimaryKeySelective(order);
+    public void lend(Integer userId, Integer deviceId) {
+        Device device = deviceMapper.selectByPrimaryKey(deviceId);
+        device.setStatus("借出");
+        device.setUpdateTime(new Date());
+        deviceMapper.updateByPrimaryKeySelective(device);
+        // 生成订单
+        Order order = new Order()
+                .setDeviceId(deviceId)
+                .setUserId(userId)
+                .setStatus("借出");
+        order.setCreateTime(new Date());
+        orderMapper.insertSelective(order);
     }
 
     @Override
@@ -37,19 +50,15 @@ public class OrderServiceImpl extends BaseServiceImpl<OrderMapper, Order> implem
     }
 
     @Override
-    public PageInfo<OrderModel> selectModelPage(MybatisCondition condition) {
-        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
-        return new PageInfo<>(selectModel(condition));
+    public void remand(Integer id) {
+        Order order = orderMapper.selectByPrimaryKey(id);
+        order.setUpdateTime(new Date());
+        order.setStatus("归还");
+        orderMapper.updateByPrimaryKeySelective(order);
+        Device device = deviceMapper.selectByPrimaryKey(order.getDeviceId());
+        device.setStatus("未借");
+        device.setUpdateTime(new Date());
+        deviceMapper.updateByPrimaryKeySelective(device);
     }
 
-    @Override
-    public OrderModel selectModelById(Long id) {
-        MybatisCondition example = new MybatisCondition()
-                .eq("o.id", id);
-        List<OrderModel> list = selectModel(example);
-        if (list.size() > 0) {
-            return list.get(0);
-        }
-        return null;
-    }
 }

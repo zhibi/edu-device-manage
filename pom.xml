@@ -135,8 +135,8 @@
         </dependency>
         <!-- 无用 可以删除-->
         <dependency>
-            <groupId>zhibi</groupId>
-            <artifactId>zhibi-generate-spring-boot-starter</artifactId>
+            <groupId>zhibi-fast</groupId>
+            <artifactId>fast-generate</artifactId>
             <version>1.0.0</version>
         </dependency>
 
